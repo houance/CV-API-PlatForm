@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-12-17T08:03:36.018Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="_9gZa05rHyN6Cc6fF9Kj" version="14.0.3" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-17T08:04:10.928Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="5CJue86y6fC-9pMnWaQ2" version="14.0.3" type="github">
   <diagram id="7dhG77_Q10vjQAKvfWMw" name="Page-1">
-    <mxGraphModel dx="1218" dy="765" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="609" dy="383" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -27,6 +27,18 @@
         </mxCell>
         <mxCell id="i9eNnEVXPlJ7ctMdqRhR-1" value="运算负载均衡" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="480" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="i9eNnEVXPlJ7ctMdqRhR-6" target="Oo6SzhEoN0E3CcnQ-WtD-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="i9eNnEVXPlJ7ctMdqRhR-6" target="Oo6SzhEoN0E3CcnQ-WtD-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="i9eNnEVXPlJ7ctMdqRhR-6" target="Oo6SzhEoN0E3CcnQ-WtD-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="i9eNnEVXPlJ7ctMdqRhR-6" target="Oo6SzhEoN0E3CcnQ-WtD-7">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="i9eNnEVXPlJ7ctMdqRhR-6" value="GPU + CPU" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1121" y="280" width="120" height="60" as="geometry" />
@@ -62,6 +74,9 @@
           <mxGeometry x="680" y="280" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Oo6SzhEoN0E3CcnQ-WtD-4" target="i9eNnEVXPlJ7ctMdqRhR-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Oo6SzhEoN0E3CcnQ-WtD-4" target="Oo6SzhEoN0E3CcnQ-WtD-1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Oo6SzhEoN0E3CcnQ-WtD-4" value="ObjectDetection" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
