@@ -4,7 +4,7 @@ from Utils.JsonUtils import jsonUtils
 
 
 app = Flask(__name__)
-cv2.setNumThreads(3)
+# cv2.setNumThreads(3)
 
 
 @app.route('/yolo', methods=['POST'])
