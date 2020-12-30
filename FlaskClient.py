@@ -1,6 +1,6 @@
 import cv2
 import time
-from Utils.JsonUtils import jsonUtils
+from Utils.Utils import jsonUtils
 import requests
 
 

@@ -1,6 +1,6 @@
 from flask import Flask, request
 import cv2
-from Utils.JsonUtils import jsonUtils
+from Utils.Utils import jsonUtils
 
 
 app = Flask(__name__)

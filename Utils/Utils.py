@@ -4,7 +4,16 @@ import requests
 import cv2
 
 
-class jsonUtils:
+class PyzmqUtils:
+    @staticmethod
+    def getAddressAndSendFrameInfo(url, ID, Width, Height):
+        header = {'content-type': 'application/json'}
+        jsonData = {'ID': ID, 'Width': Width, 'Height': Height}
+        response = requests.post(url, data=json.dumps(jsonData), headers=header)
+        return response.content
+
+
+
     @staticmethod
     def packFrame(frame, method='jpg', quality=80):
         flag, frameEncode = cv2.imencode('.{}'.format(method), frame, params=[quality])

@@ -7,6 +7,8 @@ import time
 class streamer:
     def __init__(self, path, queueSize=128):
         self.cap = cv2.VideoCapture(path)
+        self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.queue = Queue(maxsize=queueSize)
         self.stop = False
         self.startThread()

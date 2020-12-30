@@ -1,6 +1,6 @@
 import zmq
 import cv2
-from Utils.JsonUtils import jsonUtils
+from Utils.Utils import jsonUtils
 import numpy as np
 
 
