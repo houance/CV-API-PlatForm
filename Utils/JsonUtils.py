@@ -18,7 +18,11 @@ class jsonUtils:
         return cv2.imdecode(frameDecode, cv2.IMREAD_COLOR)
 
     @staticmethod
-    def postJsonRequest(jsonFrame, url):
+    def postJsonRequest(jsonFrame, url, session=None):
         header = {'content-type': 'application/json'}
         jsonRequests = {'image': jsonFrame}
-        return requests.post(url, data=json.dumps(jsonRequests), headers=header)
+        if not session:
+            return requests.post(url, data=json.dumps(jsonRequests), headers=header)
+        else:
+            return session.post(url, data=json.dumps(jsonRequests), headers=header)
+
