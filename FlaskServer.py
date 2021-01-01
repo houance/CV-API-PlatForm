@@ -1,6 +1,6 @@
 from flask import Flask, request
 import cv2
-from Utils.Utils import jsonUtils
+from Utils.PyzmqUtils import jsonUtils
 
 
 app = Flask(__name__)

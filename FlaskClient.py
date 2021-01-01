@@ -1,6 +1,6 @@
 import cv2
 import time
-from Utils.Utils import jsonUtils
+from Utils.PyzmqUtils import jsonUtils
 import requests
 
 

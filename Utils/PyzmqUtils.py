@@ -12,8 +12,6 @@ class PyzmqUtils:
         response = requests.post(url, data=json.dumps(jsonData), headers=header)
         return response.content
 
-
-
     @staticmethod
     def packFrame(frame, method='jpg', quality=80):
         flag, frameEncode = cv2.imencode('.{}'.format(method), frame, params=[quality])
