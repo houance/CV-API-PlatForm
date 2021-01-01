@@ -17,7 +17,7 @@ class Client:
         if self.method == 'Yolo':
             return cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
 
-    def sendPreProcesssFrame(self):
+    def sendPreProcessFrame(self):
         if self.streamer.hasMore():
             frame = self.streamer.getFrame()
         else:
