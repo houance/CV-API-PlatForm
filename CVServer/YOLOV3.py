@@ -21,7 +21,7 @@ class YOLO:
         self.ln = [self.ln[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
 
     def predict(self, blob, detectionFilter=-1):
-        imageNewWidth = 720
+        imageNewWidth = 640
         imageNewHeight = 480
         self.net.setInput(blob)
         layerOutputs = self.net.forward(self.ln)
@@ -78,6 +78,5 @@ class YOLO:
                 (x, y) = (boxes[i][0], boxes[i][1])
                 (w, h) = (boxes[i][2], boxes[i][3])
                 # draw a bounding box rectangle and label on the frame
-                color = [int(c) for c in self.colour[classIDs[i]]]
                 detectionBoxes.append([x, y, w, h, classIDs[i]])
-        return detectionBoxes
+        return np.array(detectionBoxes)

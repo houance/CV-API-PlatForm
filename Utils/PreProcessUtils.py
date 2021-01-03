@@ -18,3 +18,7 @@ class preProcess:
     @staticmethod
     def decodeBlob(blob):
         return np.frombuffer(blob, dtype='float32').reshape(1, 3, 416, 416)
+
+    @staticmethod
+    def decodeDetection(detection):
+        return np.frombuffer(detection, dtype='int').reshape(-1, 5)
