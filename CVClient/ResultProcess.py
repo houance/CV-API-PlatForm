@@ -10,6 +10,16 @@ class ResultProcess:
         self.confidence = confidence
         self.threshold = threshold
 
+    @staticmethod
+    def CascadesResultProcess(frame, faces: np.ndarray):
+        frameNew = frame.copy()
+        if faces is None:
+            return False, None
+        faces = faces.flatten().reshape((-1, 4))
+        for face in faces:
+            cv2.rectangle(frameNew, (face[0], face[1]), (face[0] + face[2], face[1] + face[3]), (0, 0, 255))
+        return frameNew, faces
+
     def YOLOResultProcess(self, frame, LayerOutputs, detectionFilter=-1, painted=1):
         frameNew = frame.copy()
         frameNewHeight, frameNewWidth = frameNew.shape[:2]
