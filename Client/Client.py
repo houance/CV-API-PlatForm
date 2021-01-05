@@ -1,7 +1,7 @@
 import zmq.green as zmq
 from Utils.threadReadFrame import streamer
 from Utils.PyzmqUtils import PyzmqUtils
-from Utils.PreProcessUtils import preProcess
+from Utils.NetTransfer import NetTransfer
 
 
 class Client:
@@ -15,7 +15,7 @@ class Client:
 
     def framePreProcess(self, frame):
         if self.method == 'Yolo':
-            return preProcess.encodeBlob(frame)
+            return NetTransfer.encodeBlob(frame)
 
     def sendAndRecvFrame(self):
         if self.streamer.hasMore():
@@ -23,5 +23,5 @@ class Client:
         else:
             return False
         self.socket.send(self.framePreProcess(frame), copy=False)
-        return preProcess.decodeFrame(self.socket.recv())
+        return NetTransfer.decodeFrame(self.socket.recv())
 

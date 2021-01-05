@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-class CVClient:
+class ResultProcess:
     @staticmethod
     def ObjectVisulize(frame, detections):
         for detection in detections:

@@ -1,7 +1,7 @@
 import zmq
 import cv2
-from Utils.PreProcessUtils import preProcess
-from CVClient.Visulize import CVClient
+from Utils.NetTransfer import NetTransfer
+from CVClient.ResultProcess import ResultProcess
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
@@ -11,9 +11,9 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
-    blob = preProcess.encodeBlob(frame)
+    blob = NetTransfer.encodeBlob(frame)
     socket.send(blob)
-    CVClient.ObjectVisulize(frame, preProcess.decodeDetection(socket.recv()))
+    ResultProcess.ObjectVisulize(frame, NetTransfer.decodeDetection(socket.recv()))
     cv2.imshow('win', frame)
     cv2.waitKey(1)
 

@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-class preProcess:
+class NetTransfer:
     @staticmethod
     def encodeFrame(frame, quality=80):
         return cv2.imencode('.jpg', frame, params=[quality])
