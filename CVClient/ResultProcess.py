@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from Utils.Nms import nms
 from Utils.PriorBox import PriorBox
 
 
@@ -25,22 +24,25 @@ class ResultProcess:
         conf = result[1]
         iou = result[2]
         dets = self.pb.decode(np.squeeze(loc, axis=0), np.squeeze(conf, axis=0), np.squeeze(iou, axis=0))
-        idx = np.where(dets[:, -1] > self.confidence)[0]
-        dets = dets[idx]
 
-        if dets.shape[0]:
-            facess = nms(dets, self.threshold)
-        else:
-            facess = ()
-        faces = np.array(facess[:, :4])
-        faces = faces.astype(np.int)
-        faceStartXY = faces[:, :2]
-        faceEndXY = faces[:, 2:4]
-        faceWH = faceEndXY - faceStartXY
-        faces = np.hstack((faceStartXY, faceWH))
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frameNew, (x, y), (x + w, y + h), (0, 0, 255))
+        XY = dets[:, :4].astype('int').reshape(-1, 4)
+        boxes = list(self.turnIntoRectBoxes(XY))
+        confidences = list(dets[:, -1].astype('float'))
+        idx = cv2.dnn.NMSBoxes(boxes, confidences, self.confidence, self.threshold)
+        faces = []
+        if len(idx) > 0:
+            for i in idx.flatten():
+                faces.append(boxes[i])
+                (x, y, w, h) = boxes[i]
+                cv2.rectangle(frameNew, (x, y), (x + w, y + h), (0, 0, 255))
+
         return frameNew, faces
+
+    @staticmethod
+    def turnIntoRectBoxes(xyBoxes):
+        startXY = xyBoxes[:, :2]
+        WH = xyBoxes[:, 2:4] - startXY
+        return np.hstack((startXY, WH))
 
     @staticmethod
     def CascadesResultProcess(frame, faces: np.ndarray):
@@ -52,67 +54,27 @@ class ResultProcess:
             cv2.rectangle(frameNew, (face[0], face[1]), (face[0] + face[2], face[1] + face[3]), (0, 0, 255))
         return frameNew, faces
 
-    def YOLOResultProcess(self, frame, LayerOutputs, detectionFilter=-1, painted=1):
+    def YOLOResultProcess(self, frame, layerOutputs, detectionFilter=-1, painted=1):
         frameNew = frame.copy()
         frameNewHeight, frameNewWidth = frameNew.shape[:2]
-        layerOutputs = LayerOutputs
+        detection = np.concatenate((layerOutputs[0], layerOutputs[1], layerOutputs[2]))
+        boxes = detection[:, :4] * np.array([frameNewWidth, frameNewHeight, frameNewWidth, frameNewHeight])
+        boxes = list(boxes.astype('int'))
+        classIDS = np.argmax(detection[:, 5:], axis=1)
+        confidence = np.amax(detection[:, 5:], axis=1)
+        boxesIndex = cv2.dnn.NMSBoxes(boxes, confidence, self.confidence, self.threshold)
+        detections = []
 
-        boxes = []
-        confidences = []
-        classIDs = []
-        detectionBoxes = []
-        # loop over each of the layer outputs
-        for output in layerOutputs:
-            # loop over each of the detections
-            for detection in output:
-                # extract the class ID and confidence (i.e., probability)
-                # of the current object detection
-                scores = detection[5:]
-                classID = np.argmax(scores)
-                confidence = scores[classID]
-
-                if isinstance(detectionFilter, list):
-                    filterList = set(detectionFilter)
-                    if classID + 1 not in filterList:
-                        continue
-
-                elif detectionFilter != -1:
-                    if classID != detectionFilter - 1:
-                        continue
-
-                # filter out weak predictions by ensuring the detected
-                # probability is greater than the minimum probability
-                if confidence > self.confidence:
-                    # scale the bounding box coordinates back relative to
-                    # the size of the frameNew, keeping in mind that YOLO
-                    # actually returns the center (x, y)-coordinates of
-                    # the bounding box followed by the boxes' width and
-                    # height
-                    box = detection[0:4] * np.array([frameNewWidth, frameNewHeight, frameNewWidth, frameNewHeight])
-                    (centerX, centerY, width, height) = box.astype("int")
-                    # use the center (x, y)-coordinates to derive the top
-                    # and and left corner of the bounding box
-                    x = int(centerX - (width / 2))
-                    y = int(centerY - (height / 2))
-                    # update our list of bounding box coordinates,
-                    # confidences, and class IDs
-                    boxes.append([x, y, int(width), int(height)])
-                    confidences.append(float(confidence))
-                    classIDs.append(classID)
-
-        idxs = cv2.dnn.NMSBoxes(boxes, confidences, self.confidence, self.threshold)
-        # ensure at least one detection exists
-        if len(idxs) > 0:
-            # loop over the indexes we are keeping
-            for i in idxs.flatten():
-                # extract the bounding box coordinates
-                (x, y) = (boxes[i][0], boxes[i][1])
-                (w, h) = (boxes[i][2], boxes[i][3])
-                # draw a bounding box rectangle and label on the frame
-                color = [int(c) for c in self.colours[classIDs[i]]]
-                text = "{}: {:.4f}".format(self.labels[int(classIDs[i])], confidences[i])
+        if len(boxesIndex) > 0:
+            for i in boxesIndex.flatten():
+                x = boxes[i][0] = int(boxes[i][0] - boxes[i][2] / 2)
+                y = boxes[i][1] = int(boxes[i][1] - boxes[i][3] / 2)
+                detections.append(np.append(boxes[i], classIDS[i]))
+                color = [int(c) for c in self.colours[classIDS[i]]]
+                text = "{}: {:.4f}".format(self.labels[int(classIDS[i])], confidence[i])
+                w = boxes[i][2]
+                h = boxes[i][3]
                 if painted:
                     cv2.rectangle(frameNew, (x, y), (x + w, y + h), color, 2)
                     cv2.putText(frameNew, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-                detectionBoxes.append([x, y, w, h, classIDs[i]])
-        return frameNew, detectionBoxes
+        return frameNew, detections
