@@ -12,6 +12,6 @@ yolo = YOLO(gpu=1)
 faceDetector = CascadesDetector()
 faceDetector2 = yuNet()
 while True:
-    blob = NetTransfer.decodeYunetBlob(socket.recv())
-    result = faceDetector2.predict(blob)
+    blob = NetTransfer.decodeYoloBlob(socket.recv())
+    result = yolo.predict(blob)
     socket.send_pyobj(result, copy=False)

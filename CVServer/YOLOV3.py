@@ -3,9 +3,7 @@ import time
 
 
 class YOLO:
-    def __init__(self, gpu=0, confidence=0.5, threshold=0.3):
-        self.confidence = confidence
-        self.threshold = threshold
+    def __init__(self, gpu=0):
         self.net = cv2.dnn.readNetFromDarknet('/home/nopepsi/PycharmProjects/Vision-System/yolo/yolov3.cfg',
                                               '/home/nopepsi/PycharmProjects/Vision-System/yolo/yolov3.weights')
         if gpu == 1:
@@ -14,6 +12,6 @@ class YOLO:
         self.ln = self.net.getLayerNames()
         self.ln = [self.ln[i[0] - 1] for i in self.net.getUnconnectedOutLayers()]
 
-    def predictTest(self, blob):
+    def predict(self, blob):
         self.net.setInput(blob)
         return self.net.forward(self.ln)
