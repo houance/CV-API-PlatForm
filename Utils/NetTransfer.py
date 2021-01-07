@@ -14,7 +14,7 @@ class NetTransfer:
         return cv2.imdecode(np.frombuffer(recv, dtype='uint8'), -1)
 
     @staticmethod
-    def encodeBlob(frame):
+    def encodeYoloBlob(frame):
         return cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
 
     @staticmethod
@@ -22,5 +22,9 @@ class NetTransfer:
         return np.frombuffer(blob, dtype='float32').reshape(1, 3, 416, 416)
 
     @staticmethod
-    def decodeDetection(detection):
-        return np.frombuffer(detection, dtype='int').reshape(-1, 5)
+    def encodeYunetBlob(frame):
+        return cv2.dnn.blobFromImage(frame, size=(640, 480))
+
+    @staticmethod
+    def decodeYunetBlob(blob):
+        return np.frombuffer(blob, dtype='float32').reshape(1, 3, 480, 640)

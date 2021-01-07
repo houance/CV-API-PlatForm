@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+from Utils.Nms import nms
+from Utils.PriorBox import PriorBox
 
 
 class ResultProcess:
@@ -9,6 +11,36 @@ class ResultProcess:
         self.colours = np.random.randint(0, 255, size=(len(self.labels), 3), dtype='uint8')
         self.confidence = confidence
         self.threshold = threshold
+        self.init = False
+        self.pb = None
+
+    def yuNet(self, frame, result):
+        if not self.init:
+            frameWidth, frameHeight = frame.shape[:2]
+            self.pb = PriorBox(input_shape=(640, 480), output_shape=(frameHeight, frameWidth))
+            self.init = True
+
+        frameNew = frame.copy()
+        loc = result[0]
+        conf = result[1]
+        iou = result[2]
+        dets = self.pb.decode(np.squeeze(loc, axis=0), np.squeeze(conf, axis=0), np.squeeze(iou, axis=0))
+        idx = np.where(dets[:, -1] > self.confidence)[0]
+        dets = dets[idx]
+
+        if dets.shape[0]:
+            facess = nms(dets, self.threshold)
+        else:
+            facess = ()
+        faces = np.array(facess[:, :4])
+        faces = faces.astype(np.int)
+        faceStartXY = faces[:, :2]
+        faceEndXY = faces[:, 2:4]
+        faceWH = faceEndXY - faceStartXY
+        faces = np.hstack((faceStartXY, faceWH))
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frameNew, (x, y), (x + w, y + h), (0, 0, 255))
+        return frameNew, faces
 
     @staticmethod
     def CascadesResultProcess(frame, faces: np.ndarray):
