@@ -1,11 +1,10 @@
 import cv2
-import numpy as np
 
 
 class CascadesDetector:
-    def __init__(self):
-        self.detector = cv2.cuda.CascadeClassifier_create('/home/nopepsi/PycharmProjects/Vision-System/faceDetect'
-                                                          '/haarcascade_frontalface_default_cuda.xml')
+    def __init__(self, path='/home/nopepsi/PycharmProjects/Vision-System/faceDetect'
+                            '/haarcascade_frontalface_default_cuda.xml'):
+        self.detector = cv2.cuda.CascadeClassifier_create(path)
 
     def predict(self, frame):
         gpuFrame = cv2.cuda_GpuMat()

@@ -1,1 +1,13 @@
 # Created by .ignore support plugin (hsz.mobi)
+!/Router/AddressTable.ini
+.idea/.gitignore
+.idea/CV-API-PlatForm.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/other.xml
+.idea/vcs.xml
+CVClient/__pycache__/
+CVServer/__pycache__/
+Router/AddressTable.ini
+Utils/__pycache__/
