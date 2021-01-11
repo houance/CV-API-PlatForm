@@ -3,8 +3,8 @@ import time
 
 
 class YOLO:
-    def __init__(self, gpu=0, pathCfg='/home/nopepsi/PycharmProjects/Vision-System/yolo/yolov3.cfg',
-                 pathWeight='/home/nopepsi/PycharmProjects/Vision-System/yolo/yolov3.weights'):
+    def __init__(self, gpu=0, pathCfg='modelFile/yolo/yolov3.cfg',
+                 pathWeight='modelFile/yolo/yolov3.weights'):
         self.net = cv2.dnn.readNetFromDarknet(pathCfg, pathWeight)
         if gpu == 1:
             self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)

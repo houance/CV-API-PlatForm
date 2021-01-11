@@ -2,8 +2,7 @@ import cv2
 
 
 class yuNet:
-    def __init__(self, threshold=0.3, path='/home/nopepsi/PycharmProjects/Vision-System/faceDetect/YuFaceDetectNet_640'
-                                           '.onnx'):
+    def __init__(self, threshold=0.3, path='modelFile/yuNet/YuFaceDetectNet_640.onnx'):
         self.detector = cv2.dnn.readNet(path)
         self.detector.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.detector.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)

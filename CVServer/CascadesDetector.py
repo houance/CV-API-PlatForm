@@ -2,8 +2,7 @@ import cv2
 
 
 class CascadesDetector:
-    def __init__(self, path='/home/nopepsi/PycharmProjects/Vision-System/faceDetect'
-                            '/haarcascade_frontalface_default_cuda.xml'):
+    def __init__(self, path='modelFile/haar/haarcascade_frontalface_default_cuda.xml'):
         self.detector = cv2.cuda.CascadeClassifier_create(path)
 
     def predict(self, frame):
