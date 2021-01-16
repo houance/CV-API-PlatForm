@@ -13,7 +13,7 @@ class ResultProcess:
         self.init = False
         self.pb = None
 
-    def yuNet(self, frame, result):
+    def YuNetResultProcess(self, frame, result):
         if not self.init:
             frameWidth, frameHeight = frame.shape[:2]
             self.pb = PriorBox(input_shape=(640, 480), output_shape=(frameHeight, frameWidth))
