@@ -1,12 +1,12 @@
 import configparser
 
 
-class configReader:
+class ConfigReader:
     def __init__(self, path: str):
         self.reader = configparser.ConfigParser()
         self.reader.read(path)
 
-    def readValues(self):
+    def readSectionAndValue(self):
         values = []
         sections = self.reader.sections()
         for section in sections:
@@ -15,4 +15,6 @@ class configReader:
             for item in items:
                 tempValues.append(item[1])
             values.append(tempValues)
-        return values
+        return sections, values
+
+
