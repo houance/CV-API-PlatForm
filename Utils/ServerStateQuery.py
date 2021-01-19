@@ -2,10 +2,11 @@ import psutil
 from gpuinfo import GPUInfo
 import zmq
 import time
+import copy
 
 
 class ServerState:
-    def __init__(self, sections, addresses, cpu=80, gpu=70):
+    def __init__(self, sections: list, addresses: list, cpu=80, gpu=70):
         self.CpUsage = cpu
         self.GpUsage = gpu
         self.sections = sections
@@ -26,6 +27,7 @@ class ServerState:
             return True
 
     def CheckConnections(self):
+        connectedAddress = copy.deepcopy(self.addresses)
         for index, addresses in enumerate(self.addresses):
             for address in addresses:
                 socket = self.context.socket(zmq.REQ)
@@ -34,10 +36,11 @@ class ServerState:
                 time.sleep(2)
                 try:
                     recv = socket.recv(flags=zmq.NOBLOCK)
-                except zmq.ZMQError as e:
+                except zmq.ZMQError:
                     print('{}:{} server down'.format(self.sections[index], address))
+                    connectedAddress[index].remove(address)
                 else:
                     print('{}:{} {}'.format(self.sections[index], address, str(recv, encoding='utf-8')))
                 socket.disconnect(address)
                 socket.close()
-
+        return connectedAddress
