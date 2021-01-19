@@ -6,25 +6,10 @@ import copy
 
 
 class ServerState:
-    def __init__(self, sections: list, addresses: list, cpu=80, gpu=70):
-        self.CpUsage = cpu
-        self.GpUsage = gpu
+    def __init__(self, sections: list, addresses: list):
         self.sections = sections
         self.addresses = addresses
         self.context = zmq.Context()
-
-    def CpuBusy(self):
-        if psutil.cpu_percent(1) > self.CpUsage:
-            return False
-        else:
-            return True
-
-    def GpuBusy(self):
-        percent, usage = GPUInfo.gpu_usage()
-        if percent[0] > self.GpUsage:
-            return False
-        else:
-            return True
 
     def CheckConnections(self):
         connectedAddress = copy.deepcopy(self.addresses)
