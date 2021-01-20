@@ -1,8 +1,6 @@
 import sys
-import cv2
 import numpy as np
 from itertools import product
-from typing import List, Tuple
 
 
 class PriorBox:

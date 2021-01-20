@@ -1,9 +1,10 @@
 import zmq
-from Server.LoadBalance import LoadBalance
+from LoadBalance import LoadBalance
 from CVServer.CascadesDetector import CascadesDetector
 from CVServer.YOLOV3 import YOLO
 from CVServer.yuNet import yuNet
 from multiprocessing import Process
+from threading import Thread
 
 
 class PyzmqServer:
@@ -12,11 +13,11 @@ class PyzmqServer:
         self.socket.bind(address)
         self.method = method
         self.loadBalance = LoadBalance(cpu=80, gpu=70)
-        if method == 'yolo':
+        if method == 'Yolo':
             self.cvService = YOLO(gpu=1)
-        elif method == 'haar':
+        elif method == 'Haar':
             self.cvService = CascadesDetector()
-        elif method == 'yuNet':
+        elif method == 'YuNet':
             self.cvService = yuNet()
         self.start()
 
@@ -34,12 +35,16 @@ class PyzmqServer:
         self.socket.send_string('server up')
 
     def LoadBalance(self):
-        if self.method == 'yuNet':
+        if self.method == 'YuNet':
             if self.loadBalance.CpuBusy():
                 self.socket.send_string('not ok')
+            else:
+                self.socket.send_string('ok')
         else:
             if self.loadBalance.GpuBusy():
                 self.socket.send_string('not ok')
+            else:
+                self.socket.send_string('ok')
 
     def start(self):
-        Process(target=self.service()).start()
+        Thread(target=self.service()).start()
