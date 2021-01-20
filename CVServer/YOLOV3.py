@@ -1,5 +1,5 @@
 import cv2
-import time
+from Utils.NetTransfer import NetTransfer
 
 
 class YOLO:
@@ -15,3 +15,7 @@ class YOLO:
     def predict(self, blob):
         self.net.setInput(blob)
         return self.net.forward(self.ln)
+
+    def PyzmqPredict(self, recv):
+        blob = NetTransfer.decodeYoloBlob(recv)
+        return self.predict(blob)

@@ -1,12 +1,11 @@
 import cv2
-
+from Utils.NetTransfer import NetTransfer
 
 class yuNet:
-    def __init__(self, threshold=0.3, path='modelFile/yuNet/YuFaceDetectNet_640.onnx'):
+    def __init__(self, path='modelFile/yuNet/YuFaceDetectNet_640.onnx'):
         self.detector = cv2.dnn.readNet(path)
         self.detector.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
         self.detector.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
-        self.threshold = threshold
         self.outputNames = ['loc', 'conf', 'iou']
 
     def predict(self, blob):
@@ -17,3 +16,7 @@ class yuNet:
         computeOutput.append(conf)
         computeOutput.append(iou)
         return computeOutput
+
+    def PyzmqPredict(self, recv):
+        blob = NetTransfer.decodeYunetBlob(recv)
+        return self.predict(blob)

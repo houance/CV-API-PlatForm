@@ -9,6 +9,17 @@ socket = context.socket(zmq.REQ)
 socket.connect('tcp://127.0.0.1:5000')
 visualize = ResultProcess(threshold=0.4, confidence=0.7)
 cap = cv2.VideoCapture(0)
+# while True:
+#     ret, frame = cap.read()
+#     if not ret:
+#         break
+#     ret1, frameEncode = NetTransfer.encodeFrame(frame)
+#     socket.send(frameEncode)
+#     frame1, detection = visualize.CascadesResultProcess(frame, socket.recv_json(copy=False))
+#     cv2.imshow('win', frame1)
+#     cv2.waitKey(1)
+
+
 while True:
     ret, frame = cap.read()
     if not ret:
