@@ -1,12 +1,13 @@
 import cv2
-from CVServer.CVServerUtils.NetTransfer import NetTransfer
+from PyzmqServerSide.CVServer.CVServerUtils.NetTransfer import NetTransfer
 
 
 class YOLO:
     def __init__(self, gpu=0,
-                 pathCfg='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServer/CVServer/modelFile/Yolo/yolov3.cfg',
-                 pathWeight='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServer/CVServer/modelFile/Yolo/yolov3'
-                            '.weights'):
+                 pathCfg='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServerSide/CVServer/modelFile/Yolo'
+                         '/yolov3.cfg',
+                 pathWeight='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServerSide/CVServer/modelFile/Yolo'
+                            '/yolov3.weights'):
         self.net = cv2.dnn.readNetFromDarknet(pathCfg, pathWeight)
         if gpu == 1:
             self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)

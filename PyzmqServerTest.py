@@ -1,5 +1,5 @@
 import zmq
-from PyzmqServer.PyzmqServer import PyzmqServer
+from PyzmqServerSide.PyzmqServer import PyzmqServer
 from multiprocessing import Process
 
 context = zmq.Context()

@@ -1,25 +1,22 @@
 import zmq.green as zmq
-from LoadBalance import LoadBalance
-from CVServer.CascadesDetector import CascadesDetector
-from CVServer.YOLOV3 import YOLO
-from CVServer.yuNet import yuNet
+from PyzmqServerSide.CVServer.CVPredict import *
+from PyzmqServerSide.CVServer.CVServerUtils.LoadBalance import LoadBalance
 from multiprocessing import Process
 import time
 
 
-
 class PyzmqServer:
-    def __init__(self, context, address, method):
-        self.address = address
+    def __init__(self, context, routerAddress, method):
+        self.address = routerAddress
         self.method = method
         self.socket = None
         self.loadBalance = LoadBalance(cpu=80, gpu=70)
         if method == 'Yolo':
-            self.cvService = YOLO(gpu=1)
+            self.cvService = YOLOV3.YOLO(gpu=1)
         elif method == 'Haar':
-            self.cvService = CascadesDetector()
+            self.cvService = CascadesDetector.CascadesDetector()
         elif method == 'YuNet':
-            self.cvService = yuNet()
+            self.cvService = YuNet.YuNet()
         self.startProcess(context)
 
     def service(self, context):
@@ -52,3 +49,9 @@ class PyzmqServer:
 
     def startProcess(self, context):
         Process(target=self.service, args=(context,)).start()
+
+    @staticmethod
+    def StartServers(context, sections, addresses):
+        for index, section in enumerate(sections):
+            for address in addresses[index]:
+                PyzmqServer(context, address, section)

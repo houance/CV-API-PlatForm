@@ -1,8 +1,9 @@
 import cv2
-from CVServer.CVServerUtils.NetTransfer import NetTransfer
+from PyzmqServerSide.CVServer.CVServerUtils.NetTransfer import NetTransfer
 
-class yuNet:
-    def __init__(self, path='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServer/CVServer/modelFile/YuNet'
+
+class YuNet:
+    def __init__(self, path='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServerSide/CVServer/modelFile/YuNet'
                             '/YuFaceDetectNet_640.onnx'):
         self.detector = cv2.dnn.readNet(path)
         self.detector.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)

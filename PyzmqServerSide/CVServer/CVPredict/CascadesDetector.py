@@ -1,9 +1,9 @@
 import cv2
-from CVServer.CVServerUtils.NetTransfer import NetTransfer
+from PyzmqServerSide.CVServer.CVServerUtils.NetTransfer import NetTransfer
 
 
 class CascadesDetector:
-    def __init__(self, path='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServer/CVServer/modelFile/Haar'
+    def __init__(self, path='/home/nopepsi/PycharmProjects/CV-API-PlatForm/PyzmqServerSide/CVServer/modelFile/Haar'
                             '/haarcascade_frontalface_default_cuda.xml'):
         self.detector = cv2.cuda.CascadeClassifier_create(path)
 

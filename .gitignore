@@ -7,8 +7,8 @@
 .idea/modules.xml
 .idea/other.xml
 .idea/vcs.xml
-PyzmqClient/CVClient/__pycache__/
-PyzmqServer/CVServer/__pycache__/
+PyzmqClientSide/CVClient/__pycache__/
+PyzmqServerSide/CVServer/__pycache__/
 AddressTable.ini
 Utils/__pycache__/
-/PyzmqServer/CVServer/modelFile/
+/PyzmqServerSide/CVServer/modelFile/

@@ -1,6 +1,6 @@
 from flask import Flask
-from RouterUtils.ConfigReader import ConfigReader
-from RouterUtils.ServerStateQuery import ServerState
+from Router.RouterUtils.ConfigReader import ConfigReader
+from Router.RouterUtils.ServerStateQuery import ServerState
 
 ''' 
 services >> ['Yolo', 'Haar',......]

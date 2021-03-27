@@ -1,7 +1,7 @@
 import zmq
 import cv2
 from Utils.NetTransfer import NetTransfer
-from PyzmqClient.CVClient.ResultProcess import ResultProcess
+from PyzmqClientSide.CVClient.ResultProcess import ResultProcess
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
